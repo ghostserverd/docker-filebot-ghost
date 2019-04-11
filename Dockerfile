@@ -34,3 +34,5 @@ RUN mv filebot.sh filebot
 COPY root/ /
 
 RUN filebot -script fn:sysinfo
+
+CMD ["/filebot", "filebot"]
