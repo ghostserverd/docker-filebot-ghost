@@ -1,4 +1,4 @@
-FROM lsiobase/alpine:3.9
+FROM msoap/shell2http
 
 USER root
 
