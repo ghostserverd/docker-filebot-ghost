@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+# chown filebot files
+chown -R abc:abc \
+        /usr/local/bin \
+        /media \
+        /config
