@@ -33,6 +33,4 @@ RUN mv filebot.sh filebot
 # add local files
 COPY root/ /
 
-RUN filebot --help
-
 RUN filebot -script fn:sysinfo
