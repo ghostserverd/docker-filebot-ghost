@@ -35,4 +35,4 @@ COPY root/ /
 
 RUN filebot -script fn:sysinfo
 
-CMD ["/filebot", "echo ${v_name}; echo; filebot -script fn:sysinfo"]
+CMD ["-form /filebot", "echo ${v_name}; echo; filebot -script fn:sysinfo"]
