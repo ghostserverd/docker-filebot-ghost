@@ -1,4 +1,4 @@
-FROM msoap/shell2http
+FROM ghostserverd/shell2http
 
 USER root
 
