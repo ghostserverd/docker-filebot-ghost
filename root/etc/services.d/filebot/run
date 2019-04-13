@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv bash
+
+exec \
+	s6-setuidgid abc /app/shell2http \
+  -port=7676 -form /amc \
+  filebot -script fn:amc --output /media --action move --conflict auto -non-strict --log-file /media/amc.log \
+  --def unsorted=y music=y artwork=y subtitles=en \
+  movieFormat={plex} seriesFormat={plex} animeFormat={plex} musicFormat={plex} \
+  excludeList=".excludes" ut_dir="${v_path}" ut_kind="multi" ut_title="${v_name}" ut_label="${v_label}"
