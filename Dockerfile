@@ -30,6 +30,8 @@ RUN tar xvf filebot.tar.xz
 RUN chmod +x filebot.sh
 RUN mv filebot.sh filebot
 
+USER abc
+
 # add local files
 COPY root/ /
 
