@@ -36,4 +36,4 @@ COPY root/ /
 RUN filebot -script fn:sysinfo
 
 # CMD ["-form", "/filebot", "echo ${v_name}; echo; filebot -script fn:sysinfo"]
-CMD ["-form", "/filebot", "echo ${v_path}; echo ${v_name}; echo ${v_label}; filebot -script fn:amc --output /media --action move --conflict auto -non-strict --log-file /media/amc.log --def unsorted=y music=y artwork=y subtitles=en movieFormat={plex} seriesFormat={plex} animeFormat={plex} musicFormat={plex} excludeList=\".excludes\" ut_dir=\"${v_path}\" ut_kind=\"multi\" ut_title=\"${v_name}\" ut_label=\"${v_label}\""]
+CMD ["-form", "/amc", "echo ${v_path}; echo ${v_name}; echo ${v_label}; filebot -script fn:amc --output /media --action move --conflict auto -non-strict --log-file /media/amc.log --def unsorted=y music=y artwork=y subtitles=en movieFormat={plex} seriesFormat={plex} animeFormat={plex} musicFormat={plex} excludeList=\".excludes\" ut_dir=\"${v_path}\" ut_kind=\"multi\" ut_title=\"${v_name}\" ut_label=\"${v_label}\""]
