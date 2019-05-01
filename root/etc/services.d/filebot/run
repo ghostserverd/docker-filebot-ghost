@@ -1,8 +1,10 @@
 #!/usr/bin/with-contenv bash
 
+LISTEN_PORT=${FILEBOT_LISTEN_PORT:-7676}
+
 exec \
 	s6-setuidgid abc /app/shell2http \
-  -port=7676 -form /amc \
+  -port=${LISTEN_PORT} -form /amc \
   'filebot -script fn:amc --output /media --action move --conflict auto -non-strict --log-file /media/amc.log \
   --def unsorted=y music=y artwork=y subtitles=en \
   movieFormat={plex} seriesFormat={plex} animeFormat={plex} musicFormat={plex} \
