@@ -7,5 +7,5 @@ exec \
   -port=${LISTEN_PORT} -form /amc \
   'filebot -script fn:amc --output /media --action copy --conflict auto -non-strict -no-xattr --log-file /media/amc.log \
   --def unsorted=y clean=y music=y artwork=y subtitles=en \
-  movieFormat="{plex} - {hd}" seriesFormat="{plex} - {hd}" animeFormat="{plex} - {hd}" musicFormat="{plex} - {hd}" \
+  movieFormat="{plex}" seriesFormat="{plex}" animeFormat="{plex}" musicFormat="{plex}" \
   excludeList=".excludes" ut_dir="$v_path" ut_kind="multi" ut_title="$v_name" ut_label="$v_label"'
