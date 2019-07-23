@@ -3,9 +3,9 @@
 LISTEN_PORT=${FILEBOT_PORT:-7676}
 
 exec \
-	s6-setuidgid abc /app/shell2http \
-  -port=${LISTEN_PORT} -form /amc \
-  'filebot -script fn:amc --output /media --action copy --conflict auto -non-strict -no-xattr --log-file /media/amc.log \
-  --def unsorted=y clean=y music=y artwork=y subtitles=en \
-  movieFormat="{plex}" seriesFormat="{plex}" animeFormat="{plex}" musicFormat="{plex}" \
-  excludeList=".excludes" ut_dir="$v_path" ut_kind="multi" ut_title="$v_name" ut_label="$v_label"'
+  s6-setuidgid abc /app/shell2http \
+    -port=${LISTEN_PORT} -form /amc \
+    'filebot -script fn:amc --output /media --action copy --conflict auto -non-strict -no-xattr --log-file /media/amc.log \
+    --def unsorted=y clean=y music=y artwork=y subtitles=en \
+    movieFormat="{plex}" seriesFormat="{plex}" animeFormat="{plex}" musicFormat="{plex}" \
+    excludeList=".excludes" ut_dir="$v_path" ut_kind="multi" ut_title="$v_name" ut_label="$v_label"'
