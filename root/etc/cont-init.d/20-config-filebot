@@ -1,7 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-# chown filebot files
-chown -R abc:abc \
-        /usr/share/filebot \
-        /config \
-        /data
