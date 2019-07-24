@@ -6,7 +6,6 @@ COPY --from=msoap/shell2http /app/shell2http /app/shell2http
 # install filebot
 ENV FILEBOT_VERSION 4.7.9
 
-
 WORKDIR /usr/share/filebot
 
 ARG FILEBOT_SHA256="892723dcec8fe5385ec6665db9960e7c1a88e459a60525c02afb7f1195a50523"
@@ -24,24 +23,14 @@ RUN apt-get update && apt-get install -y \
     inotify-tools \
  && rm -rf /var/lib/apt/lists/*
 
-
 ENV DOCKER_DATA /data
-ENV DOCKER_VOLUME /volume1
-
-
+WORKDIR $DOCKER_DATA
 ENV HOME $DOCKER_DATA
 ENV JAVA_OPTS "-DuseGVFS=false -Djava.net.useSystemProxies=false -Dapplication.deployment=docker -Dapplication.dir=$DOCKER_DATA -Duser.home=$DOCKER_DATA -Djava.io.tmpdir=$DOCKER_DATA/tmp -Djava.util.prefs.PreferencesFactory=net.filebot.util.prefs.FilePreferencesFactory -Dnet.filebot.util.prefs.file=$DOCKER_DATA/prefs.properties"
-
-
-WORKDIR $DOCKER_DATA
-
-VOLUME ["$DOCKER_DATA", "$DOCKER_VOLUME"]
 
 # install s6 overlay
 ARG OVERLAY_VERSION="v1.22.0.0"
 ARG OVERLAY_ARCH="amd64"
-
-ARG DEBIAN_FRONTEND="noninteractive"
 
 RUN \
   curl -o \
@@ -58,6 +47,13 @@ RUN \
   /defaults && \
   echo "**** cleanup ****" && \
   apt-get clean
+
+# initialize filebot and clean up some permissions
+RUN \
+  filebot -script fn:sysinfo && \
+  mkdir -p ${DOCKER_DATA}/.filebot && \
+  ln -s ${DOCKER_DATA}/cache/ ${DOCKER_DATA}/.filebot/ && \
+  ls -lah ${DOCKER_DATA}
 
 COPY root/ /
 
