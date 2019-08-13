@@ -8,20 +8,23 @@ UT_DIR='$v_path'
 UT_TITLE='$v_name'
 UT_LABEL='$v_label'
 
+DIR_FULL_PATH="$SHARE_BASE_PATH$UT_DIR"
+MEDIA_FULL_PATH="$SHARE_BASE_PATH/media"
+
 exec \
   s6-setuidgid abc /app/shell2http \
     -port=${LISTEN_PORT} \
     -show-errors \
     -include-stderr \
     -form /amc \
-    "filebot -script fn:amc --output /media --action ${FILEBOT_ACTION} --conflict ${FILEBOT_CONFLICT} -non-strict -no-xattr --log-file /config/amc.log \
+    "filebot -script fn:amc --output ${MEDIA_FULL_PATH} --action ${FILEBOT_ACTION} --conflict ${FILEBOT_CONFLICT} -non-strict -no-xattr --log-file /config/amc.log \
     --def unsorted=y clean=y music=y artwork=y subtitles=en \
     movieFormat=\"${FILEBOT_FORMAT}\" \
     seriesFormat=\"${FILEBOT_FORMAT}\" \
     animeFormat=\"${FILEBOT_FORMAT}\" \
     musicFormat=\"${FILEBOT_FORMAT}\" \
     excludeList="/config/.excludes" \
-    ut_dir=\"$UT_DIR\" \
+    ut_dir=\"$DIR_FULL_PATH\" \
     ut_kind=\"multi\" \
     ut_title=\"$UT_TITLE\" \
     ut_label=\"$UT_LABEL\""
