@@ -8,7 +8,7 @@ UT_DIR='$v_path'
 UT_TITLE='$v_name'
 UT_LABEL='$v_label'
 
-DIR_FULL_PATH="$SHARE_BASE_PATH$UT_DIR"
+DIR_FULL_PATH="$SHARE_BASE_PATH$(eval echo $UT_DIR)"
 MEDIA_FULL_PATH="$SHARE_BASE_PATH/media"
 
 exec \
