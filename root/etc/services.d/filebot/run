@@ -24,7 +24,7 @@ exec \
     animeFormat=\"${FILEBOT_FORMAT}\" \
     musicFormat=\"${FILEBOT_FORMAT}\" \
     excludeList="/config/.excludes" \
-    ut_dir=\"\\\"\$(eval echo $DIR_FULL_PATH)\\\"\" \
+    ut_dir=\"\$(eval echo $DIR_FULL_PATH)\" \
     ut_kind=\"multi\" \
-    ut_title=\"$UT_TITLE\" \
-    ut_label=\"$UT_LABEL\""
+    ut_title=\"\$(eval echo $UT_TITLE)\" \
+    ut_label=\"\$(eval echo $UT_LABEL)\""
