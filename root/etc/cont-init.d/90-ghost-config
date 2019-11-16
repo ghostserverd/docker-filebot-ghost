@@ -15,8 +15,17 @@ cat <<"EOF"
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 EOF
 
-# take control of permissions
+# opensubtitles
+if [ ! -z $OPEN_SUB_USER ] && [ ! -z $OPEN_SUB_PASS ]
+then
+    echo "authenticating with opensubtitles"
+    printf "%s\n" $OPEN_SUB_USER $OPEN_SUB_PASS | filebot -script fn:configure
+fi
+
+# permissions
 chown -R abc:abc \
-        /usr/share/filebot \
         /config \
         /data
+
+echo "licensing filebot"
+filebot --license /config/license.psm

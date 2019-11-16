@@ -1,59 +1,31 @@
-FROM openjdk:8-jre
+FROM lsiobase/ubuntu:bionic
 
 # install shell2http
 COPY --from=msoap/shell2http /app/shell2http /app/shell2http
 
 # install filebot
-ENV FILEBOT_VERSION 4.7.9
+RUN apt-get update \
+ && apt-get install -y default-jre-headless libjna-java mediainfo libchromaprint-tools unrar p7zip-full p7zip-rar mkvtoolnix mp4v2-utils gnupg curl file inotify-tools \
+ && rm -rvf /var/lib/apt/lists/*
 
-WORKDIR /usr/share/filebot
-
-ARG FILEBOT_SHA256="892723dcec8fe5385ec6665db9960e7c1a88e459a60525c02afb7f1195a50523"
-ARG FILEBOT_PACKAGE="filebot_${FILEBOT_VERSION}_amd64.deb"
-COPY ${FILEBOT_PACKAGE} ./
-RUN echo "$FILEBOT_SHA256 *$FILEBOT_PACKAGE" | sha256sum --check --strict \
- && dpkg -i $FILEBOT_PACKAGE \
- && rm $FILEBOT_PACKAGE
-
-RUN apt-get update && apt-get install -y \
-    mediainfo \
-    libchromaprint-tools \
-    file \
-    curl \
-    inotify-tools \
- && rm -rf /var/lib/apt/lists/*
+RUN apt-key adv --fetch-keys https://raw.githubusercontent.com/filebot/plugins/master/gpg/maintainer.pub  \
+ && echo "deb [arch=all] https://get.filebot.net/deb/ universal main" > /etc/apt/sources.list.d/filebot.list \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends filebot \
+ && rm -rvf /var/lib/apt/lists/*
 
 ENV DOCKER_DATA /data
-WORKDIR $DOCKER_DATA
-ENV HOME $DOCKER_DATA
-ENV JAVA_OPTS "-DuseGVFS=false -Djava.net.useSystemProxies=false -Dapplication.deployment=docker -Dapplication.dir=$DOCKER_DATA -Duser.home=$DOCKER_DATA -Djava.io.tmpdir=$DOCKER_DATA/tmp -Djava.util.prefs.PreferencesFactory=net.filebot.util.prefs.FilePreferencesFactory -Dnet.filebot.util.prefs.file=$DOCKER_DATA/prefs.properties"
 
-# install s6 overlay
-ARG OVERLAY_VERSION="v1.22.0.0"
-ARG OVERLAY_ARCH="amd64"
+VOLUME $DOCKER_DATA
 
-RUN \
-  curl -o \
-  /tmp/s6-overlay.tar.gz -L \
-    "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz" && \
-  tar xfz \
-    /tmp/s6-overlay.tar.gz -C / && \
-  echo "**** create abc user and make our folders ****" && \
-  useradd -u 911 -U -d /config -s /bin/false abc && \
-  usermod -G users abc && \
-  mkdir -p \
-  /app \
-  /config \
-  /defaults && \
-  echo "**** cleanup ****" && \
-  apt-get clean
+ENV HOME /data
+ENV LANG C.UTF-8
+ENV FILEBOT_OPTS "-DuseGVFS=false -Djava.net.useSystemProxies=false -Dapplication.deployment=docker -Dapplication.dir=$DOCKER_DATA -Duser.home=$DOCKER_DATA -Djava.io.tmpdir=$DOCKER_DATA/tmp -Djava.util.prefs.PreferencesFactory=net.filebot.util.prefs.FilePreferencesFactory -Dnet.filebot.util.prefs.file=$DOCKER_DATA/prefs.properties" 
 
 # initialize filebot and clean up some permissions
 RUN \
   filebot -script fn:sysinfo && \
-  mkdir -p ${DOCKER_DATA}/.filebot && \
-  ln -s ${DOCKER_DATA}/cache/ ${DOCKER_DATA}/.filebot/ && \
-  ls -lah ${DOCKER_DATA}
+  mkdir -p ${DOCKER_DATA}/.filebot
 
 COPY root/ /
 
