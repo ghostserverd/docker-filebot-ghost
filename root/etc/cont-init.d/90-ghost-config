@@ -28,5 +28,5 @@ chown -R abc:abc \
         /data
 
 echo "licensing filebot"
-filebot --license /config/license.psm
+filebot --license /config/*.psm
 chown -R abc:abc /data
