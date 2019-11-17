@@ -14,18 +14,13 @@ RUN apt-key adv --fetch-keys https://raw.githubusercontent.com/filebot/plugins/m
  && apt-get install -y --no-install-recommends filebot \
  && rm -rvf /var/lib/apt/lists/*
 
-ENV DOCKER_DATA /data
-
-VOLUME $DOCKER_DATA
-
 ENV HOME /data
 ENV LANG C.UTF-8
-ENV FILEBOT_OPTS "-DuseGVFS=false -Djava.net.useSystemProxies=false -Dapplication.deployment=docker -Dapplication.dir=$DOCKER_DATA -Duser.home=$DOCKER_DATA -Djava.io.tmpdir=$DOCKER_DATA/tmp -Djava.util.prefs.PreferencesFactory=net.filebot.util.prefs.FilePreferencesFactory -Dnet.filebot.util.prefs.file=$DOCKER_DATA/prefs.properties" 
+ENV FILEBOT_OPTS "-Dapplication.deployment=docker -Duser.home=$HOME -DuseGVFS=false -Djava.net.useSystemProxies=false"
 
 # initialize filebot and clean up some permissions
 RUN \
-  filebot -script fn:sysinfo && \
-  mkdir -p ${DOCKER_DATA}/.filebot
+  filebot -script fn:sysinfo
 
 COPY root/ /
 
