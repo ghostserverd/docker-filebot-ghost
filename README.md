@@ -11,7 +11,7 @@ curl --data-urlencode name="<some_name>" --data-urlencode path="/downloads/compl
 # example compose
 ```
   filebot:
-    image: ghostserverd/filebot:5.8.x
+    image: ghostserverd/filebot:4.8.x
     container_name: filebot
     restart: always
     ports:
