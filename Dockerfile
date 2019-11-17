@@ -16,7 +16,7 @@ RUN apt-key adv --fetch-keys https://raw.githubusercontent.com/filebot/plugins/m
 
 ENV HOME /data
 ENV LANG C.UTF-8
-ENV FILEBOT_OPTS "-Dapplication.deployment=docker -Duser.home=$HOME -DuseGVFS=false -Djava.net.useSystemProxies=false"
+ENV FILEBOT_OPTS "-Dapplication.deployment=docker -Duser.home=$HOME -DuseGVFS=false -Djava.net.useSystemProxies=false -DuseExtendedFileAttributes=false"
 
 # initialize filebot and clean up some permissions
 RUN \
