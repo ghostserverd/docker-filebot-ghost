@@ -10,7 +10,7 @@ RUN apt-get update \
 
 ENV FILEBOT_VERSION 4.9.0
 
-RUN curl https://get.filebot.net/filebot/BETA/FileBot_${FILEBOT_VERSION}_amd64.deb -o FileBot.deb \
+RUN curl https://get.filebot.net/filebot/BETA/FileBot_${FILEBOT_VERSION}_universal.deb -o FileBot.deb \
  && dpkg -i FileBot.deb \
  && rm FileBot.deb
 
