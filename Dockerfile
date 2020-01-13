@@ -12,7 +12,8 @@ ENV FILEBOT_VERSION 4.9.0
 
 RUN curl https://get.filebot.net/filebot/BETA/FileBot_${FILEBOT_VERSION}_universal.deb -o FileBot.deb \
  && dpkg -i FileBot.deb \
- && rm FileBot.deb
+ && rm FileBot.deb \
+ && echo "force latest 2019-11-01
 
 ENV HOME /data
 ENV LANG C.UTF-8
