@@ -8,12 +8,12 @@ RUN apt-get update \
  && apt-get install -y default-jre-headless libjna-java mediainfo libchromaprint-tools unrar p7zip-full p7zip-rar mkvtoolnix mp4v2-utils gnupg curl file inotify-tools \
  && rm -rvf /var/lib/apt/lists/*
 
-ENV FILEBOT_VERSION 4.9.0
+ENV FILEBOT_VERSION 4.9.1
 
-RUN curl https://get.filebot.net/filebot/BETA/FileBot_${FILEBOT_VERSION}_universal.deb -o FileBot.deb \
+RUN curl https://get.filebot.net/filebot/FileBot_${FILEBOT_VERSION}/FileBot_${FILEBOT_VERSION}_universal.deb -o FileBot.deb \
  && dpkg -i FileBot.deb \
  && rm FileBot.deb \
- && echo "force latest 2019-11-01"
+ && echo "force latest 2020-04-12"
 
 ENV HOME /data
 ENV LANG C.UTF-8
