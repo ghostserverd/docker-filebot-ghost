@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-LISTEN_PORT=${FILEBOT_PORT:-7676}
+FILEBOT_PORT=${FILEBOT_PORT:-7676}
 FILEBOT_FORMAT=${FILEBOT_FORMAT:-'{plex}'}
 FILEBOT_ACTION=${FILEBOT_ACTION:-duplicate}
 FILEBOT_CONFLICT=${FILEBOT_CONFLICT:-auto}
@@ -19,7 +19,7 @@ MEDIA_FULL_PATH="$SHARE_BASE_PATH/media"
 
 exec \
   s6-setuidgid abc /app/shell2http \
-    -port=${LISTEN_PORT} \
+    -port=${FILEBOT_PORT} \
     -show-errors \
     -include-stderr \
     -form /amc \
