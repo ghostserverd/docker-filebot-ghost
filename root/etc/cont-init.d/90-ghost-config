@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bash
+
 cat <<"EOF"
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
          _               _
@@ -22,10 +23,23 @@ then
     printf "%s\n" $OPEN_SUB_USER $OPEN_SUB_PASS | filebot -script fn:configure
 fi
 
-# permissions
-chown -R abc:abc \
-        /config \
-        /data
+# only chown the /config directory if it is not owned by abc:abc
+CHOWN_DIR=/config
+DIR_OWNER=`stat -c "%U:%G" $CHOWN_DIR`
+if [[ $DIR_OWNER != "abc:abc" ]]
+then
+    echo "chowning $CHOWN_DIR please be patient"
+    chown -R abc:abc $CHOWN_DIR
+fi
+
+# only chown the /data directory if it is not owned by abc:abc
+CHOWN_DIR=/data
+DIR_OWNER=`stat -c "%U:%G" $CHOWN_DIR`
+if [[ $DIR_OWNER != "abc:abc" ]]
+then
+    echo "chowning $CHOWN_DIR please be patient"
+    chown -R abc:abc $CHOWN_DIR
+fi
 
 echo "licensing filebot"
 filebot --license /config/*.psm
