@@ -23,7 +23,7 @@ exec \
     -show-errors \
     -include-stderr \
     -form /amc \
-    "filebot -script fn:amc --output ${MEDIA_FULL_PATH} --action ${FILEBOT_ACTION} --conflict ${FILEBOT_CONFLICT} -non-strict -no-xattr --log-file /config/amc.log \
+    "filebot -script fn:amc --output ${MEDIA_FULL_PATH} --action ${FILEBOT_ACTION} --conflict ${FILEBOT_CONFLICT} -no-xattr --log-file /config/amc.log \
     --def unsorted=n clean=y music=y artwork=y subtitles=en minLengthMS=0 \
     movieFormat=\"${FILEBOT_FORMAT}\" \
     seriesFormat=\"${FILEBOT_FORMAT}\" \
