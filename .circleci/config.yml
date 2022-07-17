@@ -4,7 +4,7 @@ executors:
     environment:
       IMAGE_NAME: ghostserverd/filebot
     docker:
-      - image: circleci/buildpack-deps:stretch
+      - image: cimg/base:stable-20.04
 jobs:
   build:
     executor: docker-publisher
