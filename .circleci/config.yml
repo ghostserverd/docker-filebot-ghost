@@ -4,7 +4,7 @@ executors:
     environment:
       IMAGE_NAME: ghostserverd/filebot
     docker:
-      - image: cimg/base:stable-20.04
+      - image: cimg/base:current-22.04
 jobs:
   build:
     executor: docker-publisher
@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t $IMAGE_NAME:5.0.x .
+            docker build -t $IMAGE_NAME:5.1.x .
       - run:
           name: Archive Docker image
           command: docker save -o image.tar $IMAGE_NAME
@@ -35,7 +35,7 @@ jobs:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker push $IMAGE_NAME:5.0.x
+            docker push $IMAGE_NAME:5.1.x
 workflows:
   version: 2
   build-master:
@@ -43,13 +43,13 @@ workflows:
       - build:
           filters:
             branches:
-              only: 5.0.x
+              only: 5.1.x
       - publish-latest:
           requires:
             - build
           filters:
             branches:
-              only: 5.0.x
+              only: 5.1.x
           context: DOCKER_CREDS
   build-on-schedule:
     jobs:
@@ -66,4 +66,4 @@ workflows:
           filters:
             branches:
               only:
-                - 5.0.x
+                - 5.1.x

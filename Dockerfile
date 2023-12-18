@@ -15,7 +15,7 @@ RUN apt-get update \
  ## ** FIX libjna-java (see https://bugs.launchpad.net/ubuntu/+source/libjna-java/+bug/2000863)
  && ln -s /usr/lib/*-linux-gnu*/jni /usr/lib/jni
 
-ENV FILEBOT_VERSION 5.0.3
+ENV FILEBOT_VERSION 5.1.2
 
 RUN curl https://get.filebot.net/filebot/FileBot_${FILEBOT_VERSION}/FileBot_${FILEBOT_VERSION}_universal.deb -o FileBot.deb \
  && dpkg -i FileBot.deb \
